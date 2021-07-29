@@ -9,23 +9,21 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        aux=[]
-        temp=[]
+        p=[]
+        self.prev=None
+        self.first=None
+        self.second=None
         def solve(node=root):
             if node==None:
                 return
             solve(node.left)
-            aux.append(node.val)
-            temp.append(node)
+            if self.prev!=None and self.prev.val>node.val and self.first==None:
+                self.first=self.prev
+            if self.prev!=None and self.first!=None and self.prev.val>node.val:
+                self.second=node
+            self.prev=node
             solve(node.right)
         solve()
-        p=[]
-        sorted_aux=sorted(aux)
-        for i in range(len(aux)):
-            if sorted_aux[i]!=aux[i]:
-                p.append(i)
-        a=temp[p[0]]
-        b=temp[p[1]]
+        a=self.first
+        b=self.second
         a.val,b.val=b.val,a.val
-        
-        
